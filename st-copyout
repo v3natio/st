@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# script to pipe recent commands in st to dmenu
+# script to pipe command outputs to dmenu
 
 tmpfile=$(mktemp /tmp/st-cmd-output.XXXXXX)
 trap 'rm "$tmpfile"' 0 1 15

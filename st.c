@@ -2130,21 +2130,29 @@ externalpipe(const Arg *arg)
 	/* ignore sigpipe for now, in case child exists early */
 	oldsigpipe = signal(SIGPIPE, SIG_IGN);
 	newline = 0;
-	for (n = 0; n < term.row; n++) {
+  /* walk through *all* lines in the ring buffer, oldest -> newest */
+  for (n = -TSCREEN.size; n < term.row; n++) {
     bp = TLINE(n);
-		lastpos = MIN(tlinelen(n) + 1, term.col) - 1;
-		if (lastpos < 0)
-			break;
-		end = &bp[lastpos + 1];
-		for (; bp < end; ++bp)
-			if (xwrite(to[1], buf, utf8encode(bp->u, buf)) < 0)
-				break;
-		if ((newline = TLINE(n)[lastpos].mode & ATTR_WRAP))
-			continue;
-		if (xwrite(to[1], "\n", 1) < 0)
-			break;
-		newline = 0;
-	}
+    if (!bp)               /* line not yet allocated → nothing to dump   */
+      continue;
+
+    lastpos = MIN(tlinelen(n) + 1, term.col) - 1;
+    if (lastpos < 0)
+      continue;
+
+    end = &bp[lastpos + 1];
+    for (; bp < end; ++bp)
+      if (xwrite(to[1], buf, utf8encode(bp->u, buf)) < 0)
+        break;
+
+    /* if the line wrapped, don’t emit our own newline */
+    if (TLINE(n)[lastpos].mode & ATTR_WRAP)
+      continue;
+
+    if (xwrite(to[1], "\n", 1) < 0)
+      break;
+  }
+
 	if (newline)
 		(void)xwrite(to[1], "\n", 1);
 	close(to[1]);

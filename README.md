@@ -13,6 +13,7 @@ The upstream development for `st` can be found [here](https://git.suckless.org/s
 - [boxdraw](https://st.suckless.org/patches/boxdraw/)
 - [ligatures](https://st.suckless.org/patches/ligatures/)
 - [pipe](https://st.suckless.org/patches/externalpipe/)
+  - [scrollback compatibility](https://st.suckless.org/patches/externalpipe/) (w/ manual fixes)
 - [scrollback](https://st.suckless.org/patches/scrollback/) (ringbuffer)
   - [boxdraw compatibility](https://st.suckless.org/patches/ligatures/)
 - [xresources](https://st.suckless.org/patches/xresources/)
