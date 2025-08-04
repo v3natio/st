@@ -6,7 +6,7 @@ urlregex="(((http|https|gopher|gemini|ftp|ftps|git)://|www\\.)[a-zA-Z0-9./@$&%?$
 
 urls="$(sed 's/.*│//g' | tr '\n' ' ' | # flatten output
   grep -aEo "$urlregex" |              # extract URLs
-  uniq |                               # remove duplicates
+  uniq |                               # remove dups
   sed -E "s/[\.,;!?]$//; s/^www./http:\/\/www./")"
 
 [ -z "$urls" ] && exit 1
