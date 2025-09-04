@@ -1,4 +1,4 @@
-# Simple Terminal ![st](https://img.shields.io/static/v1?label=st&message=0.9.2&color=blue&style=flat-square)
+# Simple Terminal ![st](https://img.shields.io/static/v1?label=st&message=0.9.3&color=blue&style=flat-square)
 
 `st` is a simple terminal implementation for X.
 
